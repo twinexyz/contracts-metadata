@@ -1,0 +1,8 @@
+[package]
+name = "contracts-metadata"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+alloy-contract = "0.7.2"
+alloy-sol-types = "0.8.10"
