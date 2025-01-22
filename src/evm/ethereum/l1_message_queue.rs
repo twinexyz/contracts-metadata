@@ -9,11 +9,11 @@ sol! {
             uint64 nonce,
             uint64 chainId,
             uint64 block_number,
-            uint256 amount,
             address l1_token,
-            address from,
             address l2_token,
-            address to_twine_address
+            address from,
+            address to_twine_address,
+            uint256 amount,
         );
 
         #[derive(Debug)]
@@ -21,11 +21,11 @@ sol! {
             uint64 nonce,
             uint64 chainId,
             uint64 block_number,
-            uint256 amount,
             address l1_token,
-            address from,
             address l2_token,
-            address to_twine_address
+            address from,
+            address to_twine_address,
+            uint256 amount,
         );
     }
 }

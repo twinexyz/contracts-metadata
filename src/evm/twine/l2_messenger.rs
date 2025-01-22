@@ -44,16 +44,17 @@ sol! {
 
         #[derive(Debug)]
         event ForcedWithdrawal(
-            address indexed from,
             address l2Token,
-            string to,
-            string l1Token,
             uint256 amount,
             uint256 l1Nonce,
             uint256 indexed chainId,
             uint256 blockNumber,
-            uint256 gasLimit
+            uint256 gasLimit,
+            string l1Token,
+            string indexed from,
+            string indexed to
         );
+
 
         #[derive(Debug)]
         event LayerzeroPayload(
@@ -76,12 +77,12 @@ sol! {
 
         #[derive(Debug)]
         struct WithdrawalDetails {
-            uint256 amount;   
-            uint256 l1_nonce; 
-            address l2Token;  
-            address to;       
-            string l1Token;   
-            string from;      
+            uint256 l1Nonce;
+            uint256 amount;
+            address l2Token;
+            string l1Token;
+            string from;
+            string to;      
         }
     }
 }
