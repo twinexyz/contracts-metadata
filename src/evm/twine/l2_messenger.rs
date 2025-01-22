@@ -68,7 +68,6 @@ sol! {
             string to,
             string l1Token,
             uint256 amount,
-            uint256 value,
             uint256 nonce,
             uint256 indexed chainId,
             uint256 blockNumber,
