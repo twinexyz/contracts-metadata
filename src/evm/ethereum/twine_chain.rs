@@ -38,11 +38,11 @@ sol! {
 
         #[derive(Debug)]
         struct WithdrawalPublicInput {
+            bytes32 receiptRoot;
             uint64 chainId;
             uint64 batchNumber;
             uint64 nonce;
-            bool isForced;
-            bytes32 receiptRoot;
+            uint8 isForced;
             string l1ReceiverAddress;
             string l1TokenAddress;
             string l2TokenAddress;

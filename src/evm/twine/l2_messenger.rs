@@ -49,7 +49,7 @@ sol! {
             string to,
             string l1Token,
             uint256 amount,
-            uint256 value,
+            uint256 l1Nonce,
             uint256 indexed chainId,
             uint256 blockNumber,
             uint256 gasLimit
