@@ -6,26 +6,24 @@ sol! {
 
         #[derive(Debug)]
         event QueueDepositTransaction(
-            address indexed from,
-            address to,
-            uint256 value,
-            uint256 indexed chainId,
-            uint256 depositMessageIndex,
-            uint256 gasLimit,
-            uint256 blockNumber,
-            bytes data
+            uint64 nonce,
+            string to_twine_address,
+            string l1_token,
+            string l2_token,
+            uint64 chainId,
+            string amount,
+            uint64 block_number
         );
 
         #[derive(Debug)]
         event QueueWithdrawalTransaction(
-            address indexed from,
-            address to,
-            uint256 value,
-            uint256 chainId,
-            uint256 withdrawalMessageIndex,
-            uint256 gasLimit,
-            uint256 blockNumber,
-            bytes data
+            uint64 nonce,
+            string to_twine_address,
+            string l1_token,
+            string l2_token,
+            uint64 chainId,
+            string amount,
+            uint64 block_number
         );
     }
 }

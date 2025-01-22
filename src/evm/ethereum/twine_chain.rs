@@ -5,45 +5,57 @@ sol! {
     contract TwineChain {
 
         #[derive(Debug)]
-        struct TransactionObject {
-            uint256 chainId;
-            uint256 nonce;
-            uint256 maxPriorityFeePerGas;
-            uint256 maxFeePerGas;
-            uint256 gas;
-            address to;
-            uint256 value;
-            bytes input;
-            AccessList[] accesslist;
-            uint64 v;
-            bytes32 r;
-            bytes32 s;
+        struct ChainCommitment {
+            uint64 depositCount;
+            bytes32 depositRollingHash;
+            uint64 withdrawCount;
+            bytes32 withdrawRollingHash;
+            uint64 lzTransactionCount;
+            bytes32 lzTransactionRollingHash;
         }
 
         #[derive(Debug)]
-        struct AccessList {
-            address _address;
-            bytes32[] storageKeys;
+        struct TransactionInfo {
+            uint64 batchNumber;
+            bytes32 transactionRoot;
         }
 
-
         #[derive(Debug)]
-        struct CommitBatchInfo{
+        struct StoredBatchInfo {
             uint64 batchNumber;
             bytes32 batchHash;
             bytes32 previousStateRoot;
             bytes32 stateRoot;
             bytes32 transactionRoot;
             bytes32 receiptRoot;
-            TransactionObject[] depositTransactionObject;
-            TransactionObject[] forcedTransactionObjects;
-            TransactionObject[] otherTransactions;
         }
 
         #[derive(Debug)]
-        function commitBatch(CommitBatchInfo calldata _newBatchData) external;
+        struct FinalizeWithdrawalInput {
+            WithdrawalPublicInput publicInput;
+            bytes inclusionProof;
+        }
 
         #[derive(Debug)]
-        function finalizeBatch(uint256 batchNumber, bytes calldata _proofBytes) external;
+        struct WithdrawalPublicInput {
+            uint64 chainId;
+            uint64 batchNumber;
+            uint64 nonce;
+            bool isForced;
+            bytes32 receiptRoot;
+            string l1ReceiverAddress;
+            string l1TokenAddress;
+            string l2TokenAddress;
+            string amount;
+        }
+
+        #[derive(Debug)]
+        function commitAndFinalizeBatch(StoredBatchInfo memory commit_info, bytes memory execution_proof) external;
+
+        #[derive(Debug)]
+        function commitAndFinalizeTransactions(bytes memory transaction_info, bytes memory inclusion_proof) external;
+
+        #[derive(Debug)]
+        function finalizeWithdrawal(FinalizeWithdrawalInput memory withdrawalInputs) external;
     }
 }
