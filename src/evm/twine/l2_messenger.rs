@@ -7,29 +7,23 @@ sol! {
         // TODO: Remove height and root fields
 
         #[derive(Debug)]
-        function verifyConsensusProofAndExecuteDeposit(
+        function handleSolanaTransactions(
             uint256 chainId,
-            uint256 height, // height or slot
-            bytes32 root, // receipt_root or bank_hash
-            bytes memory consensusProof,
-            bytes memory depositTransactions,
-            bytes32 parityHash
-        );
+            bytes calldata precompileInput
+        ); 
 
         #[derive(Debug)]
-        function executeForcedWithdrawal(
+        function handleEthereumProofAndTransactions(
             uint256 chainId,
-            uint256 height, // height or slot
-            bytes32 root, // receipt_root or bank_hash
-            bytes memory withdrawalTransaction,
-            bytes32 parityHash
+            bytes memory consensusProof,
+            bytes memory ethereumTransactions
         );
 
         #[derive(Debug)]
         function verifyLayerZeroPayload(
-            uint256 chainId,
-            bytes memory lzPayload,
-            bytes memory payloadProof
+        uint256 chainId,
+        bytes memory lzPayload,
+        bytes memory payloadProof
         );
 
         #[derive(Debug)]
@@ -55,7 +49,6 @@ sol! {
             string indexed to
         );
 
-
         #[derive(Debug)]
         event LayerzeroPayload(
             uint256 indexed sourceChainId,
@@ -69,11 +62,15 @@ sol! {
             string to,
             string l1Token,
             uint256 amount,
+            uint256 value,
             uint256 nonce,
             uint256 indexed chainId,
             uint256 blockNumber,
             uint256 gasLimit
         );
+
+        event solanaTransactionsHandled(bytes transactionOutput);
+        event ethereumTransactionsHandled(bytes transactionOutput);
 
         #[derive(Debug)]
         struct WithdrawalDetails {
@@ -84,5 +81,37 @@ sol! {
             string from;
             string to;      
         }
+    }
+}
+
+sol!{
+    #[derive(Debug)]
+    struct TxnDetail {
+        uint8 status;
+        uint64 chain_id;
+        uint64 slot_number;
+        string from_address;
+        string to_twine_address;
+        string l1_token;
+        string l2_token;
+        string amount;
+    }
+
+    #[derive(Debug)]
+    struct DepositTxn {
+        uint64 l1_nonce;
+        TxnDetail detail;
+    }
+
+    #[derive(Debug)]
+    struct WithdrawTxn {
+        uint64 l1_nonce;
+        TxnDetail detail;
+    }
+
+    #[derive(Debug)]
+    struct PrecompileReturn {
+        DepositTxn[] deposit;
+        WithdrawTxn[] withdraws;
     }
 }
