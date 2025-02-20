@@ -15,26 +15,19 @@ sol! {
         #[derive(Debug)]
         function handleEthereumProofAndTransactions(
             uint256 chainId,
+            uint256 height,
+            bytes32 receiptRoot,
             bytes memory consensusProof,
             bytes memory ethereumTransactions
         );
 
         #[derive(Debug)]
         function verifyLayerZeroPayload(
-        uint256 chainId,
-        bytes memory lzPayload,
-        bytes memory payloadProof
+            uint256 chainId,
+            bytes memory lzPayload,
+            bytes memory payloadProof
         );
 
-        #[derive(Debug)]
-        event ParityHash(
-            bytes32 parityHash,
-            uint256 blockNumber,
-            bytes32 blockHash
-        );
-
-        #[derive(Debug)]
-        event L1TokenDeposit();
 
         #[derive(Debug)]
         event ForcedWithdrawal(
